@@ -1,0 +1,64 @@
+create database org;
+
+show databases;
+
+use org;
+
+create table worker(
+WORKER_ID int not null PRIMARY KEY auto_increment,
+FIRST_NAME VARCHAR(25),
+LAST_NAME VARCHAR(25),
+SALARY INT(15),
+JOINING_DATE DATETIME,
+DEPARTMENT VARCHAR(25)
+ );
+ 
+INSERT INTO worker (WORKER_ID, FIRST_NAME, LAST_NAME, SALARY, JOINING_DATE, DEPARTMENT) VALUES
+(1, 'ROHIT', 'RAWAT', 100000, '2023-12-11', 'HR'),
+(2, 'AKSHAY', 'RAO', 200000, '2023-12-03', 'ADMIN'),
+(3, 'SACHIN', 'SHARMA', 100000, '2023-02-16', 'ACCOUNT'),
+(4, 'RAKESH', 'SHARMA', 100000, '2023-02-16', 'HR'),
+(5, 'RAM', 'LAL', 10000, '2023-02-01', 'ACCOUNT');       
+   DROP TABLE worker;    
+SELECT * FROM worker; 
+
+
+select first_name,last_name,department,worker_id from worker;
+
+select * from worker where department = 'HR';
+
+select * from worker order by department ;
+
+
+select now();
+CREATE TABLE BONUS(
+   WORKER_REF_ID INT,
+   BONUS_AMOUNT INT(10),
+   BONUS_DATE DATETIME,
+   FOREIGN KEY(WORKER_REF_ID)
+     REFERENCES worker(WORKER_ID)
+     ON DELETE CASCADE
+   
+);
+INSERT INTO BONUS (WORKER_REF_ID, BONUS_AMOUNT, BONUS_DATE) VALUES
+(1, 5000, '2023-03-04'),
+(2, 8000, '2023-03-20'),
+(3, 9000, '2023-03-24');
+
+CREATE TABLE TITLE(
+                   WORKER_REF_ID INT,
+                   WORKER_TITLE CHAR(25),
+                   AFFECTED_FROM DATETIME,
+                   FOREIGN KEY(WORKER_REF_ID)
+                      REFERENCES worker(WORKER_ID)
+                      ON DELETE CASCADE
+                   );                                                                  
+INSERT INTO TITLE (WORKER_REF_ID, WORKER_TITLE, AFFECTED_FROM) VALUES
+(1, 'MANAGER', '2023-12-11'),
+(2, 'EXECUTIVE', '2023-12-03'),
+(3, 'ASST. MANAGER', '2023-02-16'),
+(4, 'LEAD', '2023-02-16'),
+(5, 'MANAGER', '2023-02-01');
+
+SELECT * FROM TITLE;
+       
